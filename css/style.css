@@ -684,9 +684,9 @@ article .post-author a {
   margin: 30px 0 !important;
 }
 article .post-body p {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 27px;
-  color: rgba(2,0,0,0.6);
+  color: rgba(2,0,0,0.8);
 }
 article .post-body >:last-child {
   margin-bottom: 0;
@@ -754,7 +754,7 @@ article .post-body ol {
 }
 article .post-body ul li,
 article .post-body ol li {
-  font-size: 15px;
+  font-size: 12px;
   padding: 10px 0 10px 25px;
   list-style-type: none;
 }
