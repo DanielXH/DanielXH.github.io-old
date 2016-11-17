@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>函数的递归--放苹果问题 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      函数的递归--放苹果问题
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>##<strong>题目描述</strong></p>
+<ul>
+<li>把M个相同的苹果放在N个同样的盘子里，允许有的盘子空着不放，问共有多少种不同的分法？</li>
+<li>注意：5，1，1和1，5，1是同一种分法</li>
+<li>输入：7 3</li>
+<li>输出：8</li>
+</ul>
+<p>问题：M个苹果放入N个盘子，有多少种分法？</p>
+<hr>
+<p>##<strong>解题思路</strong><br>假设存在一个函数能算出当我们m个苹果放到n个盘子里的时候，有多少中解决方案。分析一下这样一个函数是如何进行运算的。</p>
+<p>对于这道题目，分情况讨论：</p>
+<p>###<strong>1、 当n/盘子数 &gt; m/苹果数</strong><br>由于盘子数大于苹果数，这意味着就算每个盘子只放一个苹果，总会有(m-n)个盘子是空着的，这(m-n)个盘子对于苹果的放置方法不会产生任何影响。所以可以把多余的盘子拿掉。因此有：</p>
+<pre><code>if(n&gt;m){
+    f(m,n) = f(m,m);
+}
+</code></pre><p>###<strong>2、当n/盘子数 &lt; m/苹果数</strong><br>根据题意，允许有的盘子空着不放。根据这个条件，把所有的放置方法分成两大类：</p>
+<blockquote>
+<p>① 有盘子空着<br>② 没盘子空着</p>
+</blockquote>
+<p>所有可能存在的放置方法的数目就等于分别在这两种情况下出现的放置方法数目的加和。<br>对以上两种情况再进行分析：</p>
+<p>####<strong>① 有盘子空着</strong><br>在这个条件下，总是至少有一个盘子是空着的，而这一个空着的盘子对苹果的放置方法不会产生任何影响，这与<code>条件1</code>一样，可以把这个多余的盘子拿掉。因此有：</p>
+<pre><code>if(n &lt;= m){
+    f(m,n) = f(m,n-1);   //有盘子空着的情况
+}
+</code></pre><p>####<strong>② 没盘子空着</strong><br>在这种条件下，每个盘子都至少放有一个苹果。由于每个盘子里至少放着的那只苹果对于放置方法不会产生任何影响，因此我们又可以把每个盘子里那只多余的苹果拿掉。因此有：</p>
+<pre><code>if(n &lt;= m){
+    f(m,n) = f(m-n,n);   //没盘子空着的情况
+}
+</code></pre><p>这时，当每个盘子欧度拿掉一只苹果只有，我们又回到了<code>条件1</code>讨论的那种情况，即盘子数大于苹果数。因此又可以拿掉多余的盘子。</p>
+<p>在拿掉多余的盘子的基础上，我们又回到了<code>条件2</code>所讨论的那种情况，即盘子数等于苹果数。在这种情况下，放置方法又可以分为<code>①有盘子空着</code>和<code>②没盘子空着</code>两类。所以按照这种思路，可以一直分析下去。</p>
+<p>到最后，只剩下一个盘子或者一个苹果，这时分析就结束了。</p>
+<p>按照这种规律，我们已经把所有可能出现的情况全部都进行了分类，而我们需要得到的结果，就是把所有这些情况下的结果进行加和。</p>
+<p><img src="http://static.zybuluo.com/xudongh/pcjwd23ws6fktzw04esnnps1/%E6%9C%AA%E6%A0%87%E9%A2%98-1.png" alt="未标题-1.png-38.7kB"></p>
+<p>用C语言表述为：</p>
+<pre><code>#include&lt;stido.h&gt;
+int count(int m,int n);
+int main(){
+    int apples;
+    int plates;
+    scanf(&quot;%d %d&quot;,&amp;apples,plates);
+    printf(&quot;%d&quot;,count(apples,plates));
+}
+
+int count(int m, int n){   // m为苹果数，n为盘子数
+    if(m &lt;= 1 || n &lt;= 0)
+        return 0;
+    if(m&lt;n)
+        return count(m,m);
+    else
+        return count(m,n-1)+count(m-n,n);
+}
+</code></pre><p>可以发现，虽然在分析过程中，解题思路比较复杂，但在程序语言中少量简短的语句便可以描述出来。</p>
+<hr>
+<p>##<strong>总结</strong><br>为什么可以用这么简短的程序分析清楚这么多种情况呢？在这种场景中，递归帮我们进行自动分析。<br>运用递归设计程序的时候，其方法在于：</p>
+<blockquote>
+<ol>
+<li>先假设有一个函数fun()能够给出我们所需要答案，把关注点放在要求解的目标上（连续发生的动作是什么）；</li>
+<li>利用这个函数fun()的前提下， 分析如何解决问题，利用fun()来表示fun()，找出第n次执行与第n-1次执行之间的关系（不同次动作之间的关系）；</li>
+<li>弄清楚在最简单的情况下，其答案是什么，确定第1次的返回结果（边界条件是什么）。</li>
+</ol>
+</blockquote>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2016-11-17T15:53:45.000Z" itemprop="datePublished">2016-11-17</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="1" data-title="函数的递归--放苹果问题" data-url="http://yoursite.com/2016/11/17/1/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>Less is more.</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>
