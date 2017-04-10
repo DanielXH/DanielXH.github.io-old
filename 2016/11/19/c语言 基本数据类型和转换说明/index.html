@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>基本数据类型和转换说明 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      基本数据类型和转换说明
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>c有多种数据类型。基本的数据类型分为两大类：整数类型和浮点数类型。</p>
+<h3 id="一般的数据类型"><a href="#一般的数据类型" class="headerlink" title="一般的数据类型"></a>一般的数据类型</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">数据类型</th>
+<th style="text-align:center">转换说明</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">字符/无符号字符</td>
+<td style="text-align:center">char/unsigned char</td>
+<td style="text-align:center">%c</td>
+<td style="text-align:center">‘a’</td>
+</tr>
+<tr>
+<td style="text-align:center">整型/无符号整型</td>
+<td style="text-align:center">int/unsigned int/unsigned</td>
+<td style="text-align:center">%d</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">有符号：-32768~32768；无符号：0~65535；单独使用unsigned相当于unsigned int</td>
+</tr>
+<tr>
+<td style="text-align:center">长整型</td>
+<td style="text-align:center">long/long long</td>
+<td style="text-align:center">%ld/%lld</td>
+<td style="text-align:center">6L/6LL</td>
+<td style="text-align:center">long：-2147483647~2147483647</td>
+</tr>
+<tr>
+<td style="text-align:center">无符号长整型</td>
+<td style="text-align:center">unsigned long/unsigned long long</td>
+<td style="text-align:center">%lu/%llu</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">unsigned long：0~4294967295</td>
+</tr>
+<tr>
+<td style="text-align:center">短整型</td>
+<td style="text-align:center">short/unsigned short</td>
+<td style="text-align:center">%d</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">八进制整型</td>
+<td style="text-align:center">int/unsigned int</td>
+<td style="text-align:center">%#o/%o</td>
+<td style="text-align:center">03、044</td>
+<td style="text-align:center">%#o输出时数字带有“0”，%o输出时数字不带有“0”</td>
+</tr>
+<tr>
+<td style="text-align:center">十六进制整型</td>
+<td style="text-align:center">int/unsigned int</td>
+<td style="text-align:center">%#x/%x</td>
+<td style="text-align:center">0x3、0x44</td>
+<td style="text-align:center">%#x输出时数字带有“0x”，%x输出时数字不带有“0x”</td>
+</tr>
+<tr>
+<td style="text-align:center">单/双精度双浮点数</td>
+<td style="text-align:center">float/double/long double</td>
+<td style="text-align:center">%e/%f/%a</td>
+<td style="text-align:center">7.0、2.3E07、0x5.6p12</td>
+<td style="text-align:center">%e以指数形式输出、%f以小数形式输出、%a以十六进制和p-计数法输出</td>
+</tr>
+</tbody>
+</table>
+<h3 id="可移植类型"><a href="#可移植类型" class="headerlink" title="可移植类型"></a>可移植类型</h3><p><strong>精确宽度整数类型</strong><br>这些类型名定义在stdint.h头文件中。例如，int32_t表示32位的有符号整数类型。在使用32位int的系统中，头文件会把in32_t作为int的别名。不同的系统也可以定义相同的类型名。例如，int为16位、long位32位的系统会把int32_t作为long的别名。<br>|类型|数据类型|说明|<br>|:-:|:-:|:-:|<br>|32位有符号整型|int32_t|<br>|16位有符号整型|int16_t|<br>|…|…||</p>
+<p><strong>最小宽度类型</strong><br>一些类型名保证所表示的类型一定是至少有指定宽度的最小整数类型，这组类型集合被称为最小宽度类型。<br>|类型|数据类型|说明|<br>|:-:|:-:|:-:|<br>|可容纳8位有符号整型中宽度最小的类型|int_least8_t|<br>|…|…||</p>
+<p><strong>最快最小宽度类型</strong><br>可是计算达到最快的类型集合。<br>|类型|数据类型|说明|<br>|:-:|:-:|:-:|<br>|对8位有符号值而言运算最快的整型|int_fast8_t|<br>|…|…||</p>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2016-11-19T11:43:33.000Z" itemprop="datePublished">2016-11-19</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="c语言 基本数据类型和转换说明" data-title="基本数据类型和转换说明" data-url="http://yoursite.com/2016/11/19/c语言 基本数据类型和转换说明/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

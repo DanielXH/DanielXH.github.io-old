@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>在网页中插入icon图标的方法总结 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      在网页中插入icon图标的方法总结
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<h2 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h2><ol>
+<li>CSS Sprite</li>
+<li>font + HTML</li>
+<li>font + CSS</li>
+</ol>
+<hr>
+<h2 id="CSS-Sprite"><a href="#CSS-Sprite" class="headerlink" title="CSS Sprite"></a>CSS Sprite</h2><h3 id="①-概述"><a href="#①-概述" class="headerlink" title="① 概述"></a>① 概述</h3><p>CSS Sprite也称为“CSS 雪碧”或者“CSS 精灵”。它是把网页中一些零星背景图片定位到要显示的位置，因此也叫“图片拼合”技术。</p>
+<h3 id="②-特点"><a href="#②-特点" class="headerlink" title="② 特点"></a>② 特点</h3><ol>
+<li>相对单个小图标，可以节省文件体积和服务器请求次数，从而提高效率。</li>
+<li>一般情况下，需要将文件保存为<strong>PNG-24</strong>的文件格式，因为相对于PNG-8，PNG-24不会出现毛边。</li>
+<li>可以设计出丰富多彩的颜色图标。</li>
+<li>需要预先确定每个小图片的大小。</li>
+<li>注意小图标与小图标之间的距离。</li>
+</ol>
+<h3 id="③-使用方法"><a href="#③-使用方法" class="headerlink" title="③ 使用方法"></a>③ 使用方法</h3><p>用到的知识点主要为：</p>
+<ul>
+<li><code>background-image</code></li>
+<li><code>background-position</code></li>
+</ul>
+<hr>
+<h2 id="font-HTML"><a href="#font-HTML" class="headerlink" title="font + HTML"></a>font + HTML</h2><h3 id="①-概述-1"><a href="#①-概述-1" class="headerlink" title="① 概述"></a>① 概述</h3><p>使用字体用HTML代码以文本的形式直接在网页中画icon小图标。</p>
+<h3 id="②-为什么使用icon字体图标"><a href="#②-为什么使用icon字体图标" class="headerlink" title="② 为什么使用icon字体图标"></a>② 为什么使用icon字体图标</h3><p>使用图标字体可大大减少图标维护工作量。</p>
+<ol>
+<li><strong>灵活性：</strong>轻松地改变图标的颜色或其他CSS效果。</li>
+<li><strong>可扩展性：</strong>改变图标的大小，就像改变字体大小一样容易。</li>
+<li><strong>矢量性</strong>：图标是矢量的，与像素无关。缩放图标不会影响清晰度。</li>
+<li><strong>兼容性</strong>：字体图标支持所有现代浏览器（包括糟糕的IE6）。</li>
+<li><strong>本地使用：</strong>通过添加定制字体到你的本地系统，你可以在各种不同的设计和编辑应用程序中使用它们。</li>
+</ol>
+<h3 id="③开源的icon字体图标网站"><a href="#③开源的icon字体图标网站" class="headerlink" title="③开源的icon字体图标网站"></a>③开源的icon字体图标网站</h3><ul>
+<li><a href="http://fontawesome.io/" target="_blank" rel="external">http://fontawesome.io/</a></li>
+<li><a href="https://icomoon.io/" target="_blank" rel="external">https://icomoon.io/</a></li>
+<li><a href="http://www.bootcss.com/p/font-awesome/" target="_blank" rel="external">http://www.bootcss.com/p/font-awesome/</a></li>
+<li><a href="http://unicode-table.com/cn/" target="_blank" rel="external">http://unicode-table.com/cn/</a></li>
+<li><a href="https://design.google.com/icons/" target="_blank" rel="external">https://design.google.com/icons/</a></li>
+<li>如何自制字体图标：<a href="http://flowerboys.cn/font/article/fontsarticle/how-to-turn-your-icons-into-a-web-font.html" target="_blank" rel="external">http://flowerboys.cn/font/article/fontsarticle/how-to-turn-your-icons-into-a-web-font.html</a></li>
+</ul>
+<h3 id="④字体文件格式"><a href="#④字体文件格式" class="headerlink" title="④字体文件格式"></a>④字体文件格式</h3><ul>
+<li><strong>EOT</strong>(Embedded OpenType Fonts)：微软开发的用于嵌入网页中的字体，IE专用字体。</li>
+<li><strong>WOFF</strong>(The Web Open Font Format)：Web字体中最佳格式，是一个开放的TrueType/OpenType的压缩版本，2009年被开发，如今被W3C组织推荐标准。</li>
+<li><strong>TTF</strong>(TrueType Fonts)：1980s，由Microsoft和Apple联合开发的一套字体标准，是Mac OS和WIN操作系统中最常见的一种字体。</li>
+<li><strong>SVG</strong>(SVG Fonts)：用于SVG字体渲染的一种格式，是由W3C制定的开放标准的图形格式。</li>
+</ul>
+<p>由于浏览器对字体支持程度不一样，为了在所有浏览器都显示字体图标，我们必须同时引入这些字体文件。</p>
+<h3 id="⑤-使用方法"><a href="#⑤-使用方法" class="headerlink" title="⑤ 使用方法"></a>⑤ 使用方法</h3><p>主要用到<code>@font-face</code>属性。<br>CSS：</p>
+<pre><code>@font-face{
+font-face:&quot;family-name&quot;;  /*自定义字体名称*/
+src:url(&quot;../font/XXX.eot&quot;);  /*解决IE9兼容模式下的兼容性问题*/
+src:url(&quot;../font/XXX.eot?&quot;) format(&quot;embedded-opentype&quot;),  /*在eot加?或者?iefix，以解决字体文件在IE下加载失败的问题*/
+    url(&quot;../font/XXX.woff&quot;) format(&quot;woff&quot;),
+    url(&quot;../font/XXX.ttf&quot;) format(&quot;trueytype&quot;),
+    url(&quot;../font/XXX.syg&quot;) format(&quot;svg&quot;);
+font-weight:normal;  /*定义字体粗细*/
+font-style:normal;  /*定义字体样式*/
+｝
+
+.icon｛              /*按照一般的字体来写样式即可*/
+font-family:&quot;family-icon&quot;;
+font-style:normal;
+font-weight:normal;
+font-size:20px;
+-webkit-font-smoothing:antialiased;  /*用于webkit引擎中的字体抗锯齿属性*/
+-moz-osx-font-smoothing:graycale  /*用于Mac OS系统和火狐浏览器中的字体抗锯齿属性*/
+｝
+
+.example{
+color:#fff;  /*可轻松改变图标颜色*/
+font-size:24px;  /*改变图标的大小*/
+}
+</code></pre><p>HTML：</p>
+<pre><code>&lt;!-- 将icon图标输出时，需要在icon的16进制编码前加上&amp;#x --&gt;
+&lt;i class=&quot;icon example&quot;&gt;&amp;#xf048;&lt;/i&gt;
+</code></pre><hr>
+<h2 id="font-CSS"><a href="#font-CSS" class="headerlink" title="font + CSS"></a>font + CSS</h2><h3 id="①-概述-2"><a href="#①-概述-2" class="headerlink" title="① 概述"></a>① 概述</h3><p>将icon图标对应的HTML代码通过CSS属性写入样式文件，然后调用样式名称即可。</p>
+<h3 id="②使用方法"><a href="#②使用方法" class="headerlink" title="②使用方法"></a>②使用方法</h3><p>主要使用<code>:before伪元素</code>、<code>after伪元素</code>、<code>content属性</code></p>
+<p>CSS：</p>
+<pre><code>/*@font-face属性、.icon样式与上面方法无异*/
+.example:before{
+content:&quot;\f048&quot;  /*需要在16进制编码前加上\进行转译*/
+}
+</code></pre><p>HTML：</p>
+<pre><code>&lt;i class=&quot;icon example&quot;&gt;&lt;/i&gt;
+</code></pre><hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>CSS sprite</th>
+<th>font + HTML</th>
+<th>font + CSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原理</td>
+<td>背景图片定位</td>
+<td>@font-face</td>
+<td>@font-face</td>
+</tr>
+<tr>
+<td>兼容性</td>
+<td>完美</td>
+<td>完美</td>
+<td>不支持IE低版本</td>
+</tr>
+<tr>
+<td>图标颜色</td>
+<td>丰富</td>
+<td>单一</td>
+<td>单一</td>
+</tr>
+<tr>
+<td>缩放</td>
+<td>失真</td>
+<td>高清</td>
+<td>高清</td>
+</tr>
+<tr>
+<td>后期维护</td>
+<td>困难</td>
+<td>简单</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>使用率</td>
+<td>高</td>
+<td>逐渐增多</td>
+<td>逐渐增多</td>
+</tr>
+</tbody>
+</table>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2016-12-14T04:06:33.000Z" itemprop="datePublished">2016-12-14</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="在网页中插入icon图标的方法总结" data-title="在网页中插入icon图标的方法总结" data-url="http://yoursite.com/2016/12/14/在网页中插入icon图标的方法总结/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

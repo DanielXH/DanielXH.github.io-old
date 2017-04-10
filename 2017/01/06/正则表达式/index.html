@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>正则表达式 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      正则表达式
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>正则表达式(Regular Expression)是一种文本模式，包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为”元字符”）。</p>
+<p>正则表达式使用单个字符串来描述、匹配一系列匹配某个句法规则的字符串。</p>
+<h3 id="为什么要使用正则表达式"><a href="#为什么要使用正则表达式" class="headerlink" title="为什么要使用正则表达式"></a>为什么要使用正则表达式</h3><p>典型的搜索和替换操作缺乏灵活性，使用正则表达式搜索动态文本更加简单。<br>使用正则表达式的优点：</p>
+<ul>
+<li><strong>测试字符串内的模式</strong>：可以测试输入字符串，以查看字符串内是否出现电话号码模式或信用卡号码模式。这称为数据验证。</li>
+<li><strong>替换文本</strong>：使用正则表达式来识别文档中的特定文本，完全删除该文本或者用其他文本替换它。</li>
+<li><strong>基于模式匹配从字符串中提取子字符串</strong>：查找文档内或输入域内特定的文本。</li>
+</ul>
+<hr>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>正则表达式(regular expression)描述了一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串做替换或者从某个串中取出符合某个条件的子串等。</p>
+<p>正则表达式是由普通字符（例如字符 a 到 z）以及特殊字符（称为”元字符”）组成的文字模式。</p>
+<h2 id="普通字符"><a href="#普通字符" class="headerlink" title="普通字符"></a>普通字符</h2><p>普通字符包括没有显式指定为元字符的所有可打印和不可打印字符。这包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号。</p>
+<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>匹配除换行符以外的任意字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配字母或数字或下划线或汉字</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任意的空白符</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配数字</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配单词的开始或结束</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串的开始</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串的结束</td>
+</tr>
+</tbody>
+</table>
+<h2 id="字符转义"><a href="#字符转义" class="headerlink" title="字符转义"></a>字符转义</h2><p>如果想查找元字符本身的话，比如查找<code>.</code>,或者<code>*</code>,就出现了问题：没办法指定它们，因为它们会被解释成别的意思。这时就得使用\来取消这些字符的特殊意义。因此，应该使用<code>\.</code>和<code>\*</code>。当然，要查找\本身，也得用<code>\\</code>。</p>
+<h2 id="重复"><a href="#重复" class="headerlink" title="重复"></a>重复</h2><table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>重复零次或更多次</td>
+</tr>
+<tr>
+<td>+</td>
+<td>重复一次或更多次</td>
+</tr>
+<tr>
+<td>?</td>
+<td>重复零次或一次</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>重复n次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>重复n次或更多次</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>重复n到m次</td>
+</tr>
+</tbody>
+</table>
+<p>例：<br><code>\d+</code>匹配1个或更多连续的数字;<br><code>\b\w{6}\b</code> 匹配刚好6个字符的单词。</p>
+<h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><p>可以使用方括号<code>[]</code>创建字符集合，如：</p>
+<ul>
+<li><code>[aeiou]</code>匹配任何一个英文元音字母；</li>
+<li><code>[.?!]</code>匹配标点符号(.或?或!)；</li>
+<li><code>[0-9]</code>代表的含意与\d就是完全一致的，匹配一位数字；</li>
+</ul>
+<h2 id="分支条件"><a href="#分支条件" class="headerlink" title="分支条件"></a>分支条件</h2><p>分枝条件指的是有几种规则，如果满足其中任意一种规则都应该当成匹配，具体方法是用|把不同的规则分隔开。<br>如：<br><code>0\d{2}-\d{8}|0\d{3}-\d{7}</code>：匹配两种以连字号分隔的电话号码：一种是三位区号，8位本地号(如010-12345678)，一种是4位区号，7位本地号(0376-2233445)。</p>
+<p><strong>使用分枝条件时，要注意各个条件的顺序。</strong>如：<br>对于<code>\d{5}-\d{4}|\d{5}</code>，这个表达式用于匹配美国的邮政编码。美国邮编的规则是5位数字，或者用连字号间隔的9位数字。<br>如果把它改成<code>\d{5}|\d{5}-\d{4}</code>，那么就只会匹配5位的邮编(以及9位邮编的前5位)。<br><strong>原因是匹配分枝条件时，将会从左到右地测试每个条件，如果满足了某个分枝的话，就不会去再管其它的条件了。</strong></p>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><p>可以用小括号<code>()</code>来指定子表达式(也叫做分组)。如：<br><code>(\d{1,3}\.){3}\d{1,3}</code>是一个简单的IP地址匹配表达式。<br>要理解这个表达式，请按下列顺序分析它：<code>\d{1,3}</code>匹配1到3位的数字，<code>(\d{1,3}\.){3}</code>匹配三位数字加上一个英文句号(这个整体也就是这个分组)重复3次，最后再加上一个一到三位的数字<code>(\d{1,3})</code>。</p>
+<h2 id="反义"><a href="#反义" class="headerlink" title="反义"></a>反义</h2><table>
+<thead>
+<tr>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\W</td>
+<td>匹配任意不是字母，数字，下划线，汉字的字符</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配任意不是空白符的字符</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配任意非数字的字符</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>匹配不是单词开头或结束的位置</td>
+</tr>
+<tr>
+<td>[^x]</td>
+<td>匹配除了x以外的任意字符</td>
+</tr>
+<tr>
+<td>[^aeiou]</td>
+<td>匹配除了aeiou这几个字母以外的任意字符</td>
+</tr>
+</tbody>
+</table>
+<h2 id="后向引用"><a href="#后向引用" class="headerlink" title="后向引用"></a>后向引用</h2><p>使用小括号指定一个子表达式后，匹配这个子表达式的文本(也就是此分组捕获的内容)可以在表达式或其它程序中作进一步的处理。默认情况下，每个分组会自动拥有一个组号，规则是：从左向右，以分组的左括号为标志，第一个出现的分组的组号为1，第二个为2，以此类推。<br>后向引用用于重复搜索前面某个分组匹配的文本。如：<br><code>\b(\w+)\b\s+\1\b</code>可以用来匹配重复的单词，像go go, 或者kitty kitty。</p>
+<ul>
+<li>分组0对应整个正则表达式；</li>
+<li>实际上组号分配过程是要从左向右扫描两遍的：第一遍只给未命名组分配，第二遍只给命名组分配－－因此所有命名组的组号都大于未命名的组号；</li>
+<li>可以使用<code>(?:exp)</code>这样的语法来剥夺一个分组对组号分配的参与权。</li>
+</ul>
+<p>可以自己指定子表达式的组名。要指定一个子表达式的组名，请使用这样的语法：<code>(?&lt;Word&gt;\w+)</code>(或者把尖括号换成’也行：<code>(?&#39;Word&#39;\w+))</code>,这样就把\w+的组名指定为Word了。</p>
+<p>常用的分组语法：<br>|分类|代码/语法|说明|<br>|—-|—-|—-|<br>|捕获|<code>(exp)</code>|匹配exp,并捕获文本到自动命名的组里|<br>|捕获|<code>(?&lt;name&gt;exp)</code>|匹配exp,并捕获文本到名称为name的组里，也可以写成<code>(?&#39;name&#39;exp)</code>|<br>|捕获|<code>(?:exp)</code>|匹配exp,不捕获匹配的文本，也不给此分组分配组号|<br>|零宽断言|<code>(?=exp)</code>|匹配exp前面的位置|<br>|零宽断言|<code>(?&lt;=exp)</code>|匹配exp后面的位置|<br>|零宽断言|<code>(?!exp)</code>|匹配后面跟的不是exp的位置|<br>|零宽断言|<code>(?&lt;!exp)</code>|匹配前面不是exp的位置|<br>|注释|<code>(?#comment)</code>|这种类型的分组不对正则表达式的处理产生任何影响，用于提供注释让人阅读|</p>
+<h2 id="正向零宽断言"><a href="#正向零宽断言" class="headerlink" title="正向零宽断言"></a>正向零宽断言</h2><p><code>(?=exp)</code>称为<strong>零宽度正预测先行断言</strong>，它断言自身出现的位置的后面能匹配表达式exp。<br>如<code>\b\w+(?=ing\b)</code>，匹配以ing结尾的单词的前面部分(除了ing以外的部分)，如查找I’m singing while you’re dancing.时，它会匹配sing和danc。</p>
+<p><code>(?&lt;=exp)</code>称为<strong>零宽度正回顾后发断言</strong>，它断言自身出现的位置的前面能匹配表达式exp。<br>如<code>(?&lt;=\bre)\w+\b</code>会匹配以re开头的单词的后半部分(除了re以外的部分)，例如在查找reading a book时，它匹配ading。</p>
+<h2 id="负向零宽断言"><a href="#负向零宽断言" class="headerlink" title="负向零宽断言"></a>负向零宽断言</h2><p><code>(?!exp)</code>称为<strong>零宽度负预测先行断言</strong>，断言此位置的后面不能匹配表达式exp。<br>如：<code>\d{3}(?!\d)</code>匹配三位数字，而且这三位数字的后面不能是数字。</p>
+<p><code>(?&lt;!exp)</code>称为<strong>零宽度负回顾后发断言</strong>，断言此位置的前面不能匹配表达式exp。<br>如：<code>(?&lt;![a-z])\d{7}</code>匹配前面不是小写字母的七位数字。</p>
+<h2 id="贪婪与懒惰"><a href="#贪婪与懒惰" class="headerlink" title="贪婪与懒惰"></a>贪婪与懒惰</h2><p>当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配尽可能多的字符。<br>以这个表达式为例：<code>a.*b</code>，它将会匹配最长的以a开始，以b结束的字符串。如果用它来搜索aabab的话，它会匹配整个字符串aabab。这被称为<strong>贪婪匹配</strong>。</p>
+<p>有时，我们更需要<strong>懒惰匹配</strong>，也就是匹配尽可能少的字符。<br><strong>前面给出的限定符都可以被转化为懒惰匹配模式，只要在它后面加上一个问号<code>?</code>。</strong>这样<code>.*?</code>就意味着匹配任意数量的重复，但是在能使整个匹配成功的前提下使用最少的重复。<br>例：<code>a.*?b</code>匹配最短的，以a开始，以b结束的字符串。如果把它应用于aabab的话，它会匹配aab（第一到第三个字符）和ab（第四到第五个字符）。</p>
+<p>懒惰限定符：<br>|代码/语法|说明|<br>|—-|—-|<br>|*?|重复任意次，但尽可能少重复|<br>|+?|重复1次或更多次，但尽可能少重复|<br>|??|重复0次或1次，但尽可能少重复|<br>|{n,m}?|重复n到m次，但尽可能少重复|<br>|{n,}?|重复n次以上，但尽可能少重复|</p>
+<h2 id="平衡组-递归匹配"><a href="#平衡组-递归匹配" class="headerlink" title="平衡组/递归匹配"></a>平衡组/递归匹配</h2><ul>
+<li><code>(?&#39;group&#39;)</code> 把捕获的内容命名为group,并压入堆栈(Stack)</li>
+<li><code>(?&#39;-group&#39;)</code> 从堆栈上弹出最后压入堆栈的名为group的捕获内容，如果堆栈本来为空，则本分组的匹配失败</li>
+<li><code>(?(group)yes|no)</code> 如果堆栈上存在以名为group的捕获内容的话，继续匹配yes部分的表达式，否则继续匹配no部分</li>
+<li><code>(?!)</code> 零宽负向先行断言，由于没有后缀表达式，试图匹配总是失败</li>
+</ul>
+<hr>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><ol>
+<li><a href="https://msdn.microsoft.com/zh-cn/library/hs600312.aspx" target="_blank" rel="external">微软正则表达式教程</a></li>
+<li><a href="https://jex.im/regulex/#!embed=false&amp;flags=&amp;re=%5E(a%7Cb" target="_blank" rel="external">正则表达式在线可视化工具 Regulex</a>*%3F%24)</li>
+<li><a href="http://deerchao.net/tutorials/regex/common.htm" target="_blank" rel="external">常用的正则表达式</a></li>
+</ol>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2017-01-06T09:05:33.000Z" itemprop="datePublished">2017-01-06</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="正则表达式" data-title="正则表达式" data-url="http://yoursite.com/2017/01/06/正则表达式/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

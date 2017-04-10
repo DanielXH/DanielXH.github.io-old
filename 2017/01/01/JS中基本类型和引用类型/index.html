@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>JS中基本类型和引用类型 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      JS中基本类型和引用类型
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>ECMAScript包含两个不同类型的值：基本类型值和引用类型值。</p>
+<ul>
+<li>基本类型值指的是简单的数据段；</li>
+<li>引用类型值指由多个值构成的对象。</li>
+</ul>
+<p>当我们把变量赋值给一个变量时，解析器首先要做的就是确认这个值是基本类型值还是引用类型值。</p>
+<h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>基本数据类型就是简单的数据段，一共有五种，分别为Undifined、Null、Boolean、Number和String。</p>
+<pre><code>var a = 1;
+var b = a;
+    b = 2;
+console.log(a);  //1
+</code></pre><p>上面，b获取的值只是a值的一份拷贝，虽然，两个变量的值是相等，但是两个变量保存两不同的基本数据类型值。b只是保存了a复制的一个副本。所以，当b的值改变时，a的值依然是10。<br><img src="http://static.zybuluo.com/xudongh/6v2kfic0h2upaq244pxz07on/image_1b2tebjpr10bmk7fh2gk5414a39.png" alt="image_1b2tebjpr10bmk7fh2gk5414a39.png-6.4kB"></p>
+<h3 id="基本类型的值是不可通过方法改变的："><a href="#基本类型的值是不可通过方法改变的：" class="headerlink" title="基本类型的值是不可通过方法改变的："></a>基本类型的值是不可通过方法改变的：</h3><pre><code>var name = &#39;daniel&#39;;
+name.toUpperCase(); //  &#39;DANIEL&#39;
+console.log(name); //  &#39;daniel&#39;
+</code></pre><h3 id="基本类型是不能添加属性和方法的："><a href="#基本类型是不能添加属性和方法的：" class="headerlink" title="基本类型是不能添加属性和方法的："></a>基本类型是不能添加属性和方法的：</h3><pre><code>var person = &quot;lucy&quot;;
+person.age = 18;
+person.weight = 48;
+
+console.log(person.age)  // undefined
+console.log(person.weight)  //undefined
+</code></pre><h3 id="基本类型的比较是值的比较"><a href="#基本类型的比较是值的比较" class="headerlink" title="基本类型的比较是值的比较:"></a>基本类型的比较是值的比较:</h3><pre><code>var a = 1;
+var b = true;
+console.log(a == b);  //true
+</code></pre><p>在比较两个不同类型的变量时js会进行一定的类型转换。上面的true先转换为数字1在与a比较，结果就是ture。</p>
+<hr>
+<h2 id="引用数据类型"><a href="#引用数据类型" class="headerlink" title="引用数据类型"></a>引用数据类型</h2><p>引用数据类型是保存在堆内存中的对象，JavaScript中不可以直接访问堆内存空间中的位置和操作堆内存空间，只能通过操作对象在栈内存。因此引用数据类型的数据，在栈内存中保存的实际上是对象在堆内存中的引用地址。通过这个引用地址可以快速查找到保存在堆内存中的对象。</p>
+<pre><code>var obj1 = new Object();
+var obj2 = obj1;
+obj2.name = &quot;lucy&quot;;
+console.log(obj1.name); // lucy
+</code></pre><p>上面，我们声明了一个引用数据类型变量obj1，并把它赋值给了另外一个引用数据类型变量obj2。当我们obj2添加了一个name属性并赋值”lucy了”。obj1同样拥有了和obj2一样的name属性。说明这两个引用数据类型变量指向同一个堆内存对象,亦即相当于C语言中的指针。obj1赋值给obj2，实际只是把这个堆内存对象在栈内存的引用地址复制了一份给了obj2，但它们本质上共同指向了同一个堆内存对象。<br><img src="http://static.zybuluo.com/xudongh/wzqrdsszl23g64ebvpiaykzg/image_1b2tev3b442siofnni3521ktqm.png" alt="image_1b2tev3b442siofnni3521ktqm.png-80kB"></p>
+<pre><code>//接上面的代码
+obj2.name = &quot;leon&quot;;
+console.log(obj1.name);  //leon
+</code></pre><p>自然，给obj2添加name属性，实际上是给堆内存中的对象添加了name属性，obj2和obj1在栈内存中保存的只是堆内存对象的引用地址，虽然也是拷贝了一份，但指向的对象却是同一个。故而改变obj2引起了obj1的改变。</p>
+<h3 id="引用类型的值是可变的："><a href="#引用类型的值是可变的：" class="headerlink" title="引用类型的值是可变的："></a>引用类型的值是可变的：</h3><p>我们可以为引用类型添加属性和方法，也可以删除其属性和方法：</p>
+<pre><code>var person = {};  //创建个控对象 --引用类型
+person.name = &#39;jozo&#39;;
+person.age = 22;
+person.sayName = function(){console.log(person.name);} 
+person.sayName();  // &#39;jozo&#39;
+
+delete person.name;  //删除person对象的name属性
+person.sayName();  // undefined
+</code></pre><h3 id="引用类型的比较是引用的比较："><a href="#引用类型的比较是引用的比较：" class="headerlink" title="引用类型的比较是引用的比较："></a>引用类型的比较是引用的比较：</h3><pre><code>var person1 = {};
+var person2 = {};
+console.log(person1 == person2); // false
+</code></pre><p>引用类型是按引用访问的，也就是说比较两个对象的堆内存中的地址是否相同，很明显，person1和person2在堆内存中地址是不同的：<br><img src="http://static.zybuluo.com/xudongh/m0r1f3fqaskszb596uotz6vu/image_1b2tg3qvb37b1vk81m3a11fv1js913.png" alt="image_1b2tg3qvb37b1vk81m3a11fv1js913.png-7.3kB"></p>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2017-01-01T15:39:33.000Z" itemprop="datePublished">2017-01-01</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="JS中基本类型和引用类型" data-title="JS中基本类型和引用类型" data-url="http://yoursite.com/2017/01/01/JS中基本类型和引用类型/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>圣杯布局的实现原理 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      圣杯布局的实现原理
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>圣杯布局是一种非常经典和常用的布局方式，其所指的是三列布局，中间宽度自适应，两边定宽；或者两列布局，主体宽度自适应，左边或右边定宽。</p>
+<hr>
+<p>下面主要拿三列的圣杯布局进行分析。</p>
+<p><img src="http://static.zybuluo.com/xudongh/tm4kbknnwths755e9y89x438/image_1b0qgghq21p6513d610241n1f1nv99.png" alt="image_1b0qgghq21p6513d610241n1f1nv99.png-6.5kB"></p>
+<ul>
+<li><p>先写出html代码，主内容栏div要在侧边栏div前。<br>```</p>
+<body>
+
+  <div id="hd">头部</div>
+
+  <div class="container"><br>      <div class="main">    //主内容栏<br>          <p>主内容栏自适应宽度</p><br>      </div>
+
+<pre><code>  &lt;div class=&quot;left&quot;&gt;    //左边栏
+      &lt;p&gt;侧边栏1固定宽度&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;right&quot;&gt;   //右边栏
+      &lt;p&gt;侧边栏2固定宽度&lt;/p&gt;
+  &lt;/div&gt;
+</code></pre><p>  </p></div><p></p>
+  <div id="ft">底部</div>
+
+</body></li>
+</ul>
+<p></p>
+<pre><code>
+- 中间部分需要根据浏览器宽度的变化而变化，所以要设置mian的宽度为100%；侧边栏设置固定宽度。
+main、left、right三个div都设置左浮动。
+因为中间100%，左层和右层根本没有位置上去。
+</code></pre><p>.mian {<br>    background-color: #03a9f4;<br>    float: left;<br>    width:100%;<br>}<br>.left {<br>    background-color: #00bcd4;<br>    float: left;<br>    width: 200px;<br>}<br>.right{<br>    background-color: #00bcd4;<br>    float: left;<br>    width: 200px;<br>}</p>
+<pre><code>![image_1b0qh7eh315gcaasn9u405medm.png-7.9kB][2]
+
+- 为了把侧边栏弄上去，那么就要让主内容栏宽度变小，通过container的padding属性来设置。
+然后设置left的margin-left为-100%，把left盒子推上去。
+</code></pre><p>.mian {<br>    background-color: #03a9f4;<br>    float: left;<br>    width:100%;<br>    padding-left: 210px;<br>}<br>.left {<br>    background-color: #00bcd4;<br>    float: left;<br>    width: 200px;<br>    margin-left: -100%;<br>}</p>
+<pre><code>![image_1b0qhgae611q1s1r18ngat52tq13.png-7.9kB][3]
+
+- 为了让left盒子移动到左边，使用相对定位，设置left属性为负值。
+</code></pre><p>.left {<br>    background-color: #00bcd4;<br>    float: left;<br>    width: 200px;<br>    margin-left: -100%;<br>    position: relative;<br>    left: 210px;<br>}</p>
+<pre><code>![image_1b0qhjsja11pg16ugfnv1tjf15bj1g.png-7.8kB][4]
+
+- 同理right盒子也是一样，只不过把margin-left属性设置为一个定值，而不是像left盒子设置为-100%。
+</code></pre><p>.mian {<br>    background-color: #03a9f4;<br>    float: left;<br>    width:100%;<br>    padding-left: 210px;<br>    padding-right: 210px;<br>}<br>.right {<br>    float: left;<br>    width: 200px;<br>    margin-left: -200px;<br>    position: relative;<br>    right: -210px;<br>}</p>
+<pre><code>![image_1b0qho90c6779ct7ig1s5o3ek1t.png-6.6kB][5]
+
+---
+以下圣杯布局各种布局方式的demo：
+![image_1b0qhrq7p193jok71ctd1ouu5a02a.png-18.6kB][6]
+
+代码如下：
+</code></pre><p>&lt;!DOCTYPE html&gt;</p>
+<p><html></html></p>
+<p><head><br>    <meta charset="utf-8"><br>    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><br>    <title>圣杯布局</title></head></p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+body {background-color: #ffffff; font-size:14px;}
+#hd, #ft {padding:20px 3px; background-color: #cccccc; text-align: center;}
+.bd-lft, .bd-rgt, .bd-3-lr, .bd-3-ll, .bd-3-rr {margin:10px 0; min-width:400px;}
+.main {background-color: #03a9f4; color:#ffffff;}
+.aside, .aside-1, .aside-2 {background-color: #00bcd4; color:#ffffff;}
+p {margin:0; padding:20px; text-align: center;}
+
+
+/* 左侧栏固定宽度，右侧自适应 */
+.bd-lft {
+    zoom:1;
+    overflow:hidden;
+    padding-left:210px;
+}
+.bd-lft .aside {
+    float:left;
+    width:200px;
+    margin-left:-100%; /*= -100%*/
+
+    position:relative;
+    left:-210px; /* = -parantNode.paddingLeft */
+    _left: 0; /*IE6 hack*/
+}
+.bd-lft .main {
+    float:left;
+    width:100%;
+}
+
+
+/* 右侧栏固定宽度，左侧自适应 */
+.bd-rgt {
+    zoom:1;
+    overflow:hidden;
+    padding-right:210px;
+}
+.bd-rgt .aside {
+    float:left;
+    width:200px;
+    margin-left:-200px; /* = -this.width */
+
+    position:relative;
+    right:-210px; /* = -parantNode.paddingRight */
+}
+.bd-rgt .main {
+    float:left;
+    width:100%;
+}
+
+
+/* 左中右 三栏自适应 */
+.bd-3-lr {
+    zoom:1;
+    overflow:hidden;
+    padding-left:210px;
+    padding-right:210px;
+}
+.bd-3-lr .main {
+    float:left;
+    width:100%;
+}
+.bd-3-lr .aside-1 {
+    float: left;
+    width:200px;
+    margin-left: -100%;
+
+    position:relative;
+    left: -210px;
+    _left: 210px; /*IE6 hack*/
+}
+.bd-3-lr .aside-2 {
+    float: left;
+    width:200px;
+    margin-left: -200px;
+
+    position:relative;
+    right: -210px;
+}
+
+/* 都在左边，右侧自适应 */
+.bd-3-ll {
+    zoom:1;
+    overflow:hidden;
+    padding-left:420px;
+}
+.bd-3-ll .main {
+    float:left;
+    width:100%;
+}
+.bd-3-ll .aside-1 {
+    float: left;
+    width:200px;
+    margin-left: -100%;
+
+    position:relative;
+    left: -420px;
+    _left: 0px; /*IE6 hack*/
+}
+.bd-3-ll .aside-2 {
+    float: left;
+    width:200px;
+    margin-left: -100%;
+
+    position:relative;
+    left: -210px;
+    _left: 210px; /*IE6 hack*/
+}
+
+/* 都在右边，左侧自适应 */
+.bd-3-rr {
+    zoom:1;
+    overflow:hidden;
+    padding-right:420px;
+}
+.bd-3-rr .main {
+    float:left;
+    width:100%;
+}
+.bd-3-rr .aside-1 {
+    float: left;
+    width:200px;
+    margin-left: -200px;
+
+    position:relative;
+    right: -210px;
+}
+.bd-3-rr .aside-2 {
+    float: left;
+    width:200px;
+    margin-left: -200px;
+
+    position:relative;
+    right: -420px;
+}
+
+
+&lt;/style&gt;
+</code></pre><p></p>
+<body>
+
+<pre><code>&lt;div id=&quot;hd&quot;&gt;头部&lt;/div&gt;
+
+&lt;div class=&quot;bd-3-lr&quot;&gt;
+    &lt;div class=&quot;main&quot;&gt;
+        &lt;p&gt;主内容栏自适应宽度&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;aside-1&quot;&gt;
+        &lt;p&gt;侧边栏1固定宽度&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;aside-2&quot;&gt;
+        &lt;p&gt;侧边栏2固定宽度&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+&lt;div id=&quot;ft&quot;&gt;底部&lt;/div&gt;
+</code></pre><p></p></body><br>```<p></p>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2016-12-05T15:32:01.000Z" itemprop="datePublished">2016-12-05</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="圣杯布局实现原理" data-title="圣杯布局的实现原理" data-url="http://yoursite.com/2016/12/05/圣杯布局实现原理/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

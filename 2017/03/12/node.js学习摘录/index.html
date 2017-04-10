@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>node.js学习摘录 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      node.js学习摘录
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<h2 id="repl-交互式解释器"><a href="#repl-交互式解释器" class="headerlink" title="repl(交互式解释器)"></a>repl(交互式解释器)</h2><p>Node.js REPL(Read Eval Print Loop:交互式解释器) 表示一个电脑的环境，类似 Window 系统的终端或 Unix/Linux shell，可以在终端中输入命令，并接收系统的响应。</p>
+<ul>
+<li>读取 - 读取用户输入，解析输入了Javascript 数据结构并存储在内存中。</li>
+<li>执行 - 执行输入的数据结构</li>
+<li>打印 - 输出结果</li>
+<li>循环 - 循环操作以上步骤直到用户两次按下 ctrl-c 按钮退出。</li>
+</ul>
+<p>可以通过下面的方式来引入它：</p>
+<pre><code>const repl = require(&#39;repl&#39;);
+</code></pre><p><code>repl</code> 模块导出了 <code>repl.REPLServer</code> 类。 当 <code>repl.REPLServer</code> 的实例运行时，它接收用户输入的每一行，使用用户定义的解释函数解释这些表达式，最终输出结果。</p>
+<h3 id="全局作用域和本地作用域"><a href="#全局作用域和本地作用域" class="headerlink" title="全局作用域和本地作用域"></a>全局作用域和本地作用域</h3><p>默认的解释器提供了获取所有全局存在的变量的途径。 可以通过给每个 REPLServer 绑定的 context 对象指定变量，来显式地把变量暴露给 REPL。</p>
+<pre><code>const repl = require(&#39;repl&#39;);
+var msg = &#39;message&#39;;
+
+repl.start(&#39;&gt; &#39;).context.m = msg;
+</code></pre><p><code>context</code>对象的属性表现为 REPL 中的本地变量：</p>
+<pre><code>$ node repl_test.js
+&gt; m
+&#39;message&#39;
+</code></pre><p>默认情况下 <code>context</code> 的属性不是只读的。 如要指定只读的全局变量，<code>context</code> 属性必须使用 Object.defineProperty():</p>
+<pre><code>const repl = require(&#39;repl&#39;);
+var msg = &#39;message&#39;;
+
+const r = repl.start(&#39;&gt; &#39;);
+Object.defineProperty(r.context, &#39;m&#39;, {
+  configurable: false,
+  enumerable: true,
+  value: msg
+});
+</code></pre><h3 id="下划线-变量的赋值"><a href="#下划线-变量的赋值" class="headerlink" title="_(下划线)变量的赋值"></a>_(下划线)变量的赋值</h3><p>默认的解析器会把下划线_解析为最近一次执行的表达式。</p>
+<pre><code>&gt; [ &#39;a&#39;, &#39;b&#39;, &#39;c&#39; ]
+[ &#39;a&#39;, &#39;b&#39;, &#39;c&#39; ]
+&gt; _.length
+3
+&gt; _ += 1
+4
+</code></pre><hr>
+<h2 id="stream-流"><a href="#stream-流" class="headerlink" title="stream (流)"></a>stream (流)</h2><p>流（stream）在 Node.js 中是处理流数据的抽象接口（abstract interface）。 stream 模块提供了基础的 API 。使用这些 API 可以很容易地来构建实现流接口的对象。</p>
+<p>流可以是可读的、可写的，或是可读写的。所有的流都是 EventEmitter 的实例。</p>
+<p><code>stream</code> 模块可以通过以下方式引入：</p>
+<pre><code>const stream  = require(&#39;stream&#39;);
+</code></pre><p>所有的Stream对象都是EventEmitter的实例，常用的事件有：</p>
+<ul>
+<li>data：当有数据可读时触发</li>
+<li>end：没有更多的数据可读时触发</li>
+<li>error：在接收和写入过程发生错误时触发</li>
+<li>finish：所有数据已被写入底层系统时触发</li>
+</ul>
+<p>例：</p>
+<h3 id="1-从流中读取数据"><a href="#1-从流中读取数据" class="headerlink" title="1.从流中读取数据"></a>1.从流中读取数据</h3><p>创建input.txt文件，内容如下：</p>
+<pre><code>123
+</code></pre><p>创建main.js文件，代码如下：</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+var data = &#39;&#39;;
+
+// 创建可读流
+var readerStream = fs.createReadStream(&#39;input.txt&#39;);
+
+// 设置编码为 utf8。
+readerStream.setEncoding(&#39;UTF8&#39;);
+
+// 处理流事件 --&gt; data, end, and error
+readerStream.on(&#39;data&#39;, function(chunk) {
+   data += chunk;
+});
+
+readerStream.on(&#39;end&#39;,function(){
+   console.log(data);
+});
+
+readerStream.on(&#39;error&#39;, function(err){
+   console.log(err.stack);
+});
+
+console.log(&quot;程序执行完毕&quot;);
+</code></pre><p> 代码运行结果：</p>
+<pre><code>程序执行完毕
+123
+</code></pre><h3 id="2-写入流"><a href="#2-写入流" class="headerlink" title="2.写入流"></a>2.写入流</h3><p>创建main.js文件，代码：</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+var data = &#39;123&#39;;
+
+// 创建一个可以写入的流，写入到文件 output.txt 中
+var writerStream = fs.createWriteStream(&#39;output.txt&#39;);
+
+// 使用 utf8 编码写入数据
+writerStream.write(data,&#39;UTF8&#39;);
+
+// 标记文件末尾
+writerStream.end();
+
+// 处理流事件 --&gt; data, end, and error
+writerStream.on(&#39;finish&#39;, function() {
+    console.log(&quot;写入完成。&quot;);
+});
+
+writerStream.on(&#39;error&#39;, function(err){
+   console.log(err.stack);
+});
+
+console.log(&quot;程序执行完毕&quot;);
+</code></pre><p>代码运行结果为创建了output.txt文件，output.txt文件内容为：</p>
+<pre><code>123
+</code></pre><h3 id="管道流"><a href="#管道流" class="headerlink" title="管道流"></a>管道流</h3><p>管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。<br><img src="http://static.zybuluo.com/xudongh/edpi8oeaj2uiyi56mgmwpjyy/image_1bapfoce292unkc1sh8nd0fav9.png" alt="image_1bapfoce292unkc1sh8nd0fav9.png-19.8kB"><br> input.txt文件内容如下：</p>
+<pre><code>123
+</code></pre><p>创建main.js文件，代码如下：</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+
+// 创建一个可读流
+var readerStream = fs.createReadStream(&#39;input.txt&#39;);
+
+// 创建一个可写流
+var writerStream = fs.createWriteStream(&#39;output.txt&#39;);
+
+// 管道读写操作
+// 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中
+readerStream.pipe(writerStream);
+
+console.log(&quot;程序执行完毕&quot;);
+</code></pre><p> 代码执行后，创建了output.txt文件，内容为：</p>
+<pre><code>123
+</code></pre><h3 id="链式流"><a href="#链式流" class="headerlink" title="链式流"></a>链式流</h3><p>链式是通过连接输出流到另外一个流并创建多个对个流操作链的机制。链式流一般用于管道操作。</p>
+<h4 id="zlib-压缩-解压文件"><a href="#zlib-压缩-解压文件" class="headerlink" title="zlib 压缩/解压文件"></a>zlib 压缩/解压文件</h4><p>1.压缩文件</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+var zlib = require(&#39;zlib&#39;);
+
+// 压缩 input.txt 文件为 input.txt.gz
+fs.createReadStream(&#39;input.txt&#39;)
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream(&#39;input.txt.gz&#39;));
+
+console.log(&quot;文件压缩完成。&quot;);
+</code></pre><p>代码执行完后，在当前目录下生成了input.txt的压缩文件input.txt.gz。</p>
+<p>2.解压文件</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+var zlib = require(&#39;zlib&#39;);
+
+// 解压 input.txt.gz 文件为 input.txt
+fs.createReadStream(&#39;input.txt.gz&#39;)
+  .pipe(zlib.createGunzip())
+  .pipe(fs.createWriteStream(&#39;input.txt&#39;));
+
+console.log(&quot;文件解压完成。&quot;);
+</code></pre><hr>
+<h2 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h2><p>Buffer数据类型用于处理二进制数据流。Buffer的大小在其创建时就已确定，且不能调整大小。<br>Buffer类是在Node.js中是一个全局变量，因此无需<code>require（&#39;buffer&#39;）.Buffer</code>。</p>
+<pre><code>// 创建一个长度为 10、且用 0 填充的 Buffer。
+const buf1 = Buffer.alloc(10);
+
+// 创建一个长度为 10、且用 0x1 填充的 Buffer。 
+const buf2 = Buffer.alloc(10, 1);
+
+// 创建一个长度为 10、且未初始化的 Buffer。
+// 这个方法比调用 Buffer.alloc() 更快，
+// 但返回的 Buffer 实例可能包含旧数据，
+// 因此需要使用 fill() 或 write() 重写。
+const buf3 = Buffer.allocUnsafe(10);
+
+// 创建一个包含 [0x1, 0x2, 0x3] 的 Buffer。
+const buf4 = Buffer.from([1, 2, 3]);
+
+// 创建一个包含 ASCII 字节数组 [0x74, 0x65, 0x73, 0x74] 的 Buffer。
+const buf5 = Buffer.from(&#39;test&#39;);
+
+// 创建一个包含 UTF-8 字节数组 [0x74, 0xc3, 0xa9, 0x73, 0x74] 的 Buffer。
+const buf6 = Buffer.from(&#39;tést&#39;, &#39;utf8&#39;);
+</code></pre><h3 id="–zero-fill-buffers-命令行选项"><a href="#–zero-fill-buffers-命令行选项" class="headerlink" title="–zero-fill-buffers 命令行选项"></a>–zero-fill-buffers 命令行选项</h3><p>Node.js 可以在一开始就使用 –zero-fill-buffers 命令行选项强制所有使用 new Buffer(size) 、Buffer.allocUnsafe() 、Buffer.allocUnsafeSlow() 或 new SlowBuffer(size) 新分配的 Buffer 实例在创建时自动用 0 填充。<br>使用这个选项会改变这些方法的默认行为，且对性能有明显的影响。<br>建议只在需要强制新分配的 Buffer 实例不能包含潜在的敏感数据时才使用 –zero-fill-buffers 选项。</p>
+<pre><code>$ node --zero-fill-buffers
+&gt; Buffer.allocUnsafe(5);
+&lt;Buffer 00 00 00 00 00&gt;
+</code></pre><h3 id="Buffer与字符编码"><a href="#Buffer与字符编码" class="headerlink" title="Buffer与字符编码"></a>Buffer与字符编码</h3><p>通过使用显式的字符编码，就可以在 Buffer 实例与普通的 JavaScript 字符串之间进行相互转换。<br>Buffer支持的字符编码：</p>
+<ul>
+<li><strong>‘ascii’</strong> - 仅支持 7 位 ASCII 数据。如果设置去掉高位的话，这种编码是非常快的。</li>
+<li><strong>‘utf8’</strong> - 多字节编码的 Unicode 字符。许多网页和其他文档格式都使用 UTF-8 。</li>
+<li><strong>‘utf16le’</strong> - 2 或 4 个字节，小字节序编码的 Unicode 字符。支持代理对（U+10000 至 U+10FFFF）。</li>
+<li><strong>‘ucs2’</strong> - ‘utf16le’ 的别名。</li>
+<li><strong>‘base64’</strong> - Base64 编码。当从字符串创建 Buffer 时，按照 RFC4648 第 5 章的规定，这种编码也将正确地接受“URL 与文件名安全字母表”。</li>
+<li><strong>‘latin1’</strong> - 一种把 Buffer 编码成一字节编码的字符串的方式（由 IANA 定义在 RFC1345 第 63 页，用作 Latin-1 补充块与 C0/C1 控制码）。</li>
+<li><strong>‘binary’</strong> - ‘latin1’ 的别名。</li>
+<li><strong>‘hex’</strong> - 将每个字节编码为两个十六进制字符。</li>
+</ul>
+<p>例：</p>
+<pre><code>const buf = Buffer.from(&#39;hello world&#39;, &#39;ascii&#39;);
+
+console.log(buf.toString());
+//hello world
+
+console.log(buf.toString(&#39;hex&#39;));
+//68656c6c6f20776f726c64
+</code></pre><h3 id="buf-slice-start-end"><a href="#buf-slice-start-end" class="headerlink" title="buf.slice([start[,end]])"></a>buf.slice([start[,end]])</h3><ul>
+<li>start <code>&lt;Integer&gt;</code> 新建的 Buffer 开始的位置。 默认: 0</li>
+<li>end <code>&lt;Integer&gt;</code> 新建的 Buffer 结束的位置（不包含）。 默认: buf.length</li>
+<li>返回: <code>&lt;Buffer&gt;</code><br>返回一个指向相同原始内存的新建的 Buffer，但做了偏移且通过 start 和 end 索引进行裁剪。<br><strong>注意，修改这个新建的 Buffer 切片，也会同时修改原始的 Buffer 的内存，因为这两个对象所分配的内存是重叠的。</strong><br>```<br>const buf1 = Buffer.allocUnsafe(26);</li>
+</ul>
+<p>for (var i = 0 ; i &lt; 26 ; i++) {<br>  // 97 是 ‘a’ 的十进制 ASCII 值<br>  buf1[i] = i + 97;<br>}</p>
+<p>const buf2 = buf1.slice(0, 3);</p>
+<p>// 输出: abc<br>console.log(buf2.toString(‘ascii’, 0, buf2.length));</p>
+<p>buf1[0] = 33;</p>
+<p>// 输出: !bc<br>console.log(buf2.toString(‘ascii’, 0, buf2.length));</p>
+<pre><code>
+### Buffer.byteLength(string[, encoding])
+
+- string：要计算字符长度的字符串
+- encoding：字符编码
+- 返回string所包含的**字节数**
+</code></pre><p>const str = ‘\u00bd + \u00bc = \u00be’;</p>
+<p>// 输出: ½ + ¼ = ¾: 9 个字符, 12 个字节<br>console.log(<code>${str}: ${str.length} 个字符,</code> +<br>            <code>${Buffer.byteLength(str, &#39;utf8&#39;)} 个字节</code>);</p>
+<p>//字节：一个汉字2字节、全角标点2字节、半角标点1字节、字母1字节<br>//字符：一个汉字、标点、字母都是一个字符</p>
+<pre><code>
+---
+## Events(事件)
+所有能触发事件的对象都是 EventEmitter 类的实例。
+这些对象开放了一个 eventEmitter.on() 函数，允许将一个或多个函数附加到会被对象触发的命名事件上。
+
+以下例子展示了一个只有单个监听器的 EventEmitter 实例。 eventEmitter.on() 方法用于注册监听器，eventEmitter.emit() 方法用于触发事件。
+</code></pre><p>const EventEmitter = require(‘events’);</p>
+<p>class MyEmitter extends EventEmitter {}</p>
+<p>const myEmitter = new MyEmitter();<br>myEmitter.on(‘event’, () =&gt; {<br>  console.log(‘发生了一个事件！’);<br>});<br>myEmitter.emit(‘event’);</p>
+<pre><code>
+### 异步与同步
+EventListener 会按照监听器注册的顺序同步地调用所有监听器。 所以需要确保事件的正确排序且避免竞争条件或逻辑错误。 监听器函数可以使用 setImmediate() 或 process.nextTick() 方法切换到异步操作模式：
+</code></pre><p>const myEmitter = new MyEmitter();<br>myEmitter.on(‘event’, (a, b) =&gt; {<br>  setImmediate(() =&gt; {<br>    console.log(‘这个是异步发生的’);<br>  });<br>});<br>myEmitter.emit(‘event’, ‘a’, ‘b’);</p>
+<pre><code>
+### 注册监听器
+
+- eventEmitter.on()  这一方法用于注册监听器
+- eventEmitter.once() 这一方法注册的监听器最多被调用一次，当事件触发时，监听器会被注销，然后再调用。
+
+### 错误事件
+当 EventEmitter 实例中发生错误时，会触发一个 &#39;error&#39; 事件。
+如果 EventEmitter 没有为 &#39;error&#39; 事件注册至少一个监听器，则当 &#39;error&#39; 事件触发时，会抛出错误、打印堆栈跟踪、且退出 Node.js 进程。
+</code></pre><p>const myEmitter = new MyEmitter();<br>myEmitter.emit(‘error’, new Error(‘whoops!’));<br>// 抛出错误，并使 Node.js 奔溃</p>
+<p>//因此，应该始终为’error’事件注册监听器</p>
+<pre><code>
+## EventEmitter类
+EventEmitter 类由 events 模块定义和开放的：
+</code></pre><p>const EventEmitter = require(‘events’);<br>```</p>
+<ul>
+<li>newListener事件：当新的监听器被添加时触发</li>
+<li>removeListener事件：当移除已存在的监听器时触发</li>
+</ul>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2017-03-12T11:26:53.000Z" itemprop="datePublished">2017-03-12</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="node.js学习摘录" data-title="node.js学习摘录" data-url="http://yoursite.com/2017/03/12/node.js学习摘录/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

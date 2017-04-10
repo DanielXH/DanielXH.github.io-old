@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>c语言练习--四大湖问题 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      c语言练习--四大湖问题
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>题目：</p>
+<blockquote>
+<p>注意： 总时间限制: 1000ms 内存限制: 65536kB</p>
+<p>我国有4大淡水湖。<br>A说：洞庭湖最大，洪泽湖最小，鄱阳湖第三。<br>B说：洪泽湖最大，洞庭湖最小，鄱阳湖第二，太湖第三。<br>C说：洪泽湖最小，洞庭湖第三。<br>D说：鄱阳湖最大，太湖最小，洪泽湖第二，洞庭湖第三。<br>已知这4个湖的大小均不相等，4个人每人仅答对一个，<br>请编程按照鄱阳湖、洞庭湖、太湖、洪泽湖的顺序给的他们的大小排名。</p>
+<p><strong>输入</strong><br>无。</p>
+<p><strong>输出</strong><br>输出为4行，第1行为鄱阳湖的大小名次，从大到小名次分别表示为1、2、3、4；第2、3、4行分别为洞庭湖、太湖、洪泽湖的大小名次。</p>
+<p><strong>样例输入</strong></p>
+<pre><code>无
+</code></pre><p><strong>样例输出</strong></p>
+<pre><code>(样例输出仅供格式参考，此题只有一个解， 。)
+</code></pre></blockquote>
+<p>题目图片如下：<br><img src="http://static.zybuluo.com/xudongh/35irxmah5zbnfczibwdc9dmy/image_1avnj0hgb1270t1317li1v3e1vap9.png" alt="image_1avnj0hgb1270t1317li1v3e1vap9.png-106.1kB"></p>
+<hr>
+<p><strong>答案</strong></p>
+<pre><code>#include &lt;stdio.h&gt;
+int main(){
+    int d, h, p, t;    //遍历所有可能的四大湖排名情况
+    for(d=1; d&lt;=4; d++) {
+        for(h=1; h&lt;=4; h++) {
+            for(p=1; p&lt;=4; p++) {
+                for(t=1; t&lt;=4; t++) {
+                    if((d!=h&amp;&amp;d!=p&amp;&amp;d!=t&amp;&amp;h!=p&amp;&amp;h!=t&amp;&amp;p!=t) //保证每个湖的排名大小不同
+                       &amp;&amp;((d==1)+(h==4)+(p==3)==1)
+                       &amp;&amp;((h==1)+(d==4)+(p==2)+(t==3)==1)
+                       &amp;&amp;((h==4)+(d==3)==1)
+                       &amp;&amp;((p==1)+(t==4)+(h==2)+(d==3)==1)
+                       &amp;&amp;((d+h+p+t)==10)) {
+                        printf(&quot;%d\n%d\n%d\n%d\n&quot;, d, h, p, t);
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+</code></pre><p><strong>分析</strong><br>对于这道题，其实可以通过笔算慢慢分析即可得出答案，但如何使用编程语言来表示，这是个问题。<br>答案中，d、h、p、t分别代表洞庭湖、洪泽湖、鄱阳湖和太湖。其编程思想是，通过四个嵌套的for循环，先列出d、h、p、t所有的排列组合，然后再使用最内层的if语句检查是否满足题意。</p>
+<p><code>d!=h&amp;&amp;d!=p&amp;&amp;d!=t&amp;&amp;h!=p&amp;&amp;h!=t&amp;&amp;p!=t</code>表达式保证了四个湖的排名不相等；</p>
+<p>而对于if语句中的</p>
+<pre><code>  ((d==3)+(h==4)+(p==3)==1)
+&amp;&amp;((h==1)+(d==4)+(p==2)+(t==3)==1)
+&amp;&amp;((h==4)+(d==3)==1)
+&amp;&amp;((p==1)+(t==4)+(h==2)+(d==3)==1)
+&amp;&amp;((d+h+p+t)==10))
+</code></pre><p>这是通过题意A、B、C、D四人的话中符合<strong>“4个人每人仅答对一个”</strong>这一情况的组合。通过==运算符判定，若相等，则值为1，否则为0；四项相加为1，说明<strong>“每人仅答对一个”</strong>。</p>
+<p>输出结果为：</p>
+<pre><code>2
+4
+1
+3
+</code></pre><p>这道题的解题思路有几点是值得学习的：</p>
+<ol>
+<li>先使用四个for循环，结合d、p、h、t四个变量不可能相等的情况，列出它们可能出现的全部排列；</li>
+<li>将A、B、C、D四人的话，通过==运算符转化为编程语言；再使用并集，表示“同时满足条件”。</li>
+</ol>
+
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2016-11-26T14:40:20.000Z" itemprop="datePublished">2016-11-26</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="c语言练习--四大湖问题" data-title="c语言练习--四大湖问题" data-url="http://yoursite.com/2016/11/26/c语言练习--四大湖问题/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

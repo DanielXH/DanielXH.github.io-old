@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>二维数组的排序 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      二维数组的排序
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>在JS中有两种可以直接用来重排序的方法：reverse()和sort()。<br>reverse()方法会翻转数组项的顺序，并返回原数组。</p>
+<pre><code>var arr = [1,2,3,4,5];
+arr.reverse();
+console.log(arr);  //[5,4,3,2,1]
+</code></pre><p>sort()方法更加灵活，可按照一定的规则进行排序，其语法为：</p>
+<pre><code>arr.sort(compareFunction);
+</code></pre><p>compareFunction是用于指定按某种顺序进行排列的函数，在不指定该函数时，即默认情况下， sort()方法按照升序排列数组项——即最小的值位于最前面，最大的值排在最后面。<br>由于sort()方法会调用每个数组项的toString()转型方法，然后比较得到的字符串，因此数组元素实际上的排序方法是按照数组中每个字符的Unicode码进行排序。</p>
+<pre><code>var arr = [5,10,0,15,1];
+arr.sort();
+console.log(arr);  //[0,1,10,15,5]
+</code></pre><p>在指定compareFunction的情况下，该函数接受两个参数，数组会按照调用该函数的返回值进行排序。即a和b是两个将要被比较的元素：</p>
+<ul>
+<li>如果<code>compareFunction(a,b)&lt;0</code>，则a被排列在b之前；</li>
+<li>如果<code>compareFunction(a,b)=0</code>，a和b的相对位置不变；</li>
+<li>如果<code>compareFunction(a,b)&gt;0</code>，则a被排列在b之后。</li>
+</ul>
+<p>因此，假如要对一个数组进行升序排序，可以这样做：</p>
+<pre><code>var arr = [5,10,0,15,1];
+//比较常用的比较函数
+function compare(a,b){
+    return a-b;
+}
+arr.sort(compare);
+console.log(arr);   //[0,1,5,10,15]
+</code></pre><p>以上针对的是一维数组的排序，对于二维数组，同样可以采用sort()方法。<br>在compareFunction()函数中，要注意比较参数的传参问题。<br>例如有一组同学的名字以及对应身高的数据，现要对身高进行降序排列。</p>
+<pre><code>var arr=[
+    [&quot;小明&quot;,172],
+    [&quot;小刚&quot;,182],
+    [&quot;小红&quot;,168],
+    [&quot;小强&quot;,176],
+    [&quot;小云&quot;,172]
+];
+//二维数组的比较函数
+function compare(a,b){
+    return b[1]-a[1]
+}
+arr.sort(compare);
+console.log(arr);  //[[&quot;小刚&quot;, 182], [&quot;小强&quot;, 176], [&quot;小明&quot;, 172], [&quot;小云&quot;, 172], [&quot;小红&quot;, 168]]
+</code></pre><p>若不使用sort()方法，使用算法排序对一位数组进行排序（当然我们在js中没必要这样做），如用冒泡排序：</p>
+<pre><code>function compare(arr){
+  var i = arr.length,
+      j;
+  while(i &gt; 0){
+    for(var j = 0; j&lt;i-1; j++){
+      if(arr[j]&gt;arr[j+1]){
+        var tem = arr[j+1];
+        arr[j+1] = arr[j];
+        arr[j] = tem;
+      }
+    }
+    i--;
+  }
+  return arr;
+}
+
+var arr = [5,10,0,15,1];
+console.log(compare(arr));   //[0, 1, 5, 10, 15]
+</code></pre><p>同样，对二维数组用算法排序，和一维数组的排序并无异同：</p>
+<pre><code>function compare(arr){
+  var i = arr.length,
+      j;
+  while(i &gt; 0){
+    for(var j = 0; j&lt;i-1; j++){
+      if(arr[j][1]&gt;arr[j+1][1]){
+        var tem = arr[j+1][1];
+        arr[j+1][1] = arr[j][1];
+        arr[j][1] = tem;
+      }
+    }
+    i--;
+  }
+  return arr;
+}
+var arr=[
+    [&quot;小明&quot;,172],
+    [&quot;小刚&quot;,182],
+    [&quot;小红&quot;,168],
+    [&quot;小强&quot;,176],
+    [&quot;小云&quot;,172]
+];
+console.log(compare(arr));  //[[&quot;小明&quot;, 168], [&quot;小刚&quot;, 172], [&quot;小红&quot;, 172], [&quot;小强&quot;, 176], [&quot;小云&quot;, 182]]
+</code></pre>
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2017-03-05T08:54:12.000Z" itemprop="datePublished">2017-03-05</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="二维数组的排序" data-title="二维数组的排序" data-url="http://yoursite.com/2017/03/05/二维数组的排序/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>js设计模式之继承模式 | DanielXH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/DanielXH-logo.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/code-color.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="DanielXH">
+	<img src="/DanielXH-logo.png" alt="DanielXH"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="javascript:;" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      js设计模式之继承模式
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<h2 id="1、类式继承"><a href="#1、类式继承" class="headerlink" title="1、类式继承"></a>1、类式继承</h2><pre><code>//类式继承
+//声明父类
+function SuperClass() {
+  this.superValue = true;
+}
+
+//为父类添加公有方法
+SuperClass.prototype.getSuperValue = function() {
+  return this.superValue;
+};
+
+//声明子类
+function SubClass() {
+  this.subValue = false;
+}
+
+//继承父类
+//类式继承需要将第一个类的实例赋值给第二个类的原型
+SubClass.prototype = new SuperClass();
+//为子类添加共有方法
+SubClass.prototype.getSubValue = function() {
+  return this.subValue;
+};
+
+let instance = new SubClass();
+console.log(instance.getSuperValue());
+console.log(instance.getSubValue());
+
+console.log(SubClass instanceof SuperClass);  //false
+console.log(SubClass.prototype instanceof SuperClass);  //true
+</code></pre><p>类式继承有两个缺点：</p>
+<p>其一，由于子类通过其原型prototype对父类实例化，继承了父类。所以说父类中的共有属性要是引用类型，就会在子类中被所有实例共用，</p>
+<p>因此一个子类的实例更改 子类原型从父类构造函数中继承来的共有属性 就会直接影响到其他子类。</p>
+<pre><code>function SuperClass() {
+  this.books = [&#39;JavaScript&#39;, &#39;html&#39;, &#39;css&#39;];
+}
+function SubClass() {}
+SubClass.prototype = new SuperClass();
+let instance1 = new SubClass();
+let instance2 = new SubClass();
+console.log(instance2.books);  //[&#39;JavaScript&#39;, &#39;html&#39;, &#39;css&#39;]
+instance1.books.push(&#39;设计模式&#39;);
+console.log(instance2.books)  //[&#39;JavaScript&#39;, &#39;html&#39;, &#39;css&#39;, &#39;设计模式&#39;]
+</code></pre><p>其二，由于子类实现的继承是靠其原型prototype对父类的实例化实现的，因此在创建父类的时候，是无法向父类传递参数的，</p>
+<p>因此在创建父类的时候，是无法向父类传递参数的，因而在实例化父类的时候也无法对父类构造函数内的属性进行初始化。</p>
+<h2 id="2、构造函数式继承"><a href="#2、构造函数式继承" class="headerlink" title="2、构造函数式继承"></a>2、构造函数式继承</h2><pre><code>//构造函数式继承
+//声明父类
+function SuperClass(id) {
+  //引用类型共有属性
+  this.books = [&#39;JavaScript&#39;, &#39;html&#39;, &#39;css&#39;];
+  //值类型共有属性
+  this.id = id;
+}
+//父类声明原型方法
+SuperClass.prototype.showBooks = function() {
+  console.log(this.book);
+}
+
+//声明子类
+function SubClass(id) {
+  SuperClass.call(this,id);
+}
+
+//创建子类的实例
+let instance1 = new SubClass(10);
+let instance2 = new SubClass(11);
+
+instance1.books.push(&#39;设计模式&#39;);
+console.log(instance1.books);  //[&#39;JavaScript&#39;, &#39;html&#39;, &#39;css&#39;, &#39;设计模式&#39;]
+console.log(instance1.id);     //10
+console.log(instance2.books);  //[&#39;JavaScript&#39;, &#39;html&#39;, &#39;css&#39;]
+console.log(instance2.id);     //11
+
+instance1.showBooks();         //TypeError
+</code></pre><p><code>SuperClass.call(this,id);</code>这句语句是构造函数式继承的精华，由于call这个方法可以更改函数的作用环境，</p>
+<p>因此在子类中，对SuperClass调用这个方法就是将子类中的变量在父类中执行一遍，由于父类中是给this绑定属性的，因此子类自然也就继承了父类的共有属性。</p>
+<p>但是，由于这种类型的继承没有涉及原型prototype，所以父类的原型方法自然不会被子类继承。</p>
+<h2 id="3、组合式继承"><a href="#3、组合式继承" class="headerlink" title="3、组合式继承"></a>3、组合式继承</h2><p>组合式继承就是类式继承和构造函数式继承的组合，综合了两者的优点。</p>
+<pre><code>//组合式继承
+//声明父类
+
+function SuperClass(name) {
+  //值类型共有属性
+  this.name = name;
+  //引用类型共有属性
+  this.books = [&#39;html&#39;, &#39;css&#39;, &#39;JavaScript&#39;];
+}
+//父类原型共有方法
+SuperClass.prototype.getName = function() {
+  console.log(this.name);
+};
+
+//声明子类
+function SubClass(name, time) {
+  //构造函数式继承父类name属性
+  SuperClass.call(this, name);
+  //子类中新增共有属性
+  this.time = time;
+}
+//类式继承 子类原型继承父类
+SubClass.prototype = new SuperClass();
+//子类原型方法
+SubClass.prototype.getTime = function() {
+  console.log(this.time);
+}
+
+let instance1 = new SubClass(&#39;js book&#39;, 2014);
+instance1.books.push(&#39;设计模式&#39;);
+console.log(instance1.books);
+instance1.getName();
+instance2.getTime();
+</code></pre><h2 id="4、原型式继承"><a href="#4、原型式继承" class="headerlink" title="4、原型式继承"></a>4、原型式继承</h2><pre><code>//原型式继承
+function inheritObject(o) {
+  //声明一个过渡函数对象
+  function F() {}
+  //过渡对象的原型继承父对象
+  F.prototype = o;
+  //返回过渡对象的一个实例，该实例的原型继承了夫对象
+  return new F();
+}
+
+//测试
+
+let book = {
+  name: &#39;js books&#39;,
+  alikeBook: [&#39;css book&#39;, &#39;html book&#39;]
+};
+
+let newBook = inheritObject(book);
+newBook.name = &#39;ajax book&#39;;
+newBook.alikeBook.push(&#39;xml book&#39;);
+
+let otherBook = inheritObject(book);
+otherBook.name = &#39;es6 book&#39;;
+otherBook.alikeBook.push(&#39;node book&#39;);
+
+console.log(newBook.name);
+console.log(newBook.alikeBook);
+
+console.log(otherBook.name);
+console.log(newBook.alikeBook);
+
+console.log(book.name);
+console.log(book.alikeBook);
+</code></pre><h2 id="5、寄生式继承"><a href="#5、寄生式继承" class="headerlink" title="5、寄生式继承"></a>5、寄生式继承</h2><pre><code>//寄生式继承
+//声明基对象
+
+let book = {
+  name: &#39;js book&#39;,
+  alikeBook: [&#39;css book&#39;, &#39;html book&#39;]
+};
+
+//原型式继承
+function inheritObject(o) {
+  //声明一个过渡函数对象
+  function F() {}
+  //过渡对象的原型继承父对象
+  F.prototype = o;
+  //返回过渡对象的一个实例，该实例的原型继承了夫对象
+  return new F();
+}
+
+function createBook(obj) {
+  //通过原型继承方式创建新对象
+  let o = new inheritObject(obj);
+  //拓展新对象
+  o.getName = function() {
+    console.log(name);
+  };
+  //返回拓展后的新对象
+  return o;
+}
+</code></pre><p>寄生式继承就是对原型继承的第二次封装，并且在这第二次封装过程中对继承的对象进行了拓展</p>
+<p>这样新创建的对象不仅仅有父类中的属性和方法，而且还可以添加新的属性和方法</p>
+<h2 id="6、寄生组合式继承"><a href="#6、寄生组合式继承" class="headerlink" title="6、寄生组合式继承"></a>6、寄生组合式继承</h2><pre><code>//原型式继承
+function inheritObject(o) {
+  //声明一个过渡函数对象
+  function F() {}
+  //过渡对象的原型继承父对象
+  F.prototype = o;
+  //返回过渡对象的一个实例，该实例的原型继承了夫对象
+  return new F();
+}
+
+
+// 寄生组合式继承
+// 传递参数 subClass 子类
+// 传递参数 SuperClass 父类
+function inheritPrototpye (subClass, SuperClass) {
+  //复制一份父类的原型副本保存在变量中
+  let p = inheritObject(SuperClass.prototype);
+  //修正因为重写子类原型导致子类的constructor属性被修改
+  p.constructor = subClass;
+  //设置子类的原型
+  subClass.prototype = p;
+}
+
+//定义父类
+function SuperClass(name) {
+  this.name = name;
+  this.colors = [&#39;red&#39;, &#39;blue&#39;, &#39;green&#39;];
+}
+//定义父类原型方法
+SuperClass.prototype.getName = function() {
+  console.log(this.name);
+}
+
+//定义子类
+function SubClass(name, time) {
+  //构造函数式继承
+  SuperClass.call(this, name);
+  //子类新增属性
+  this.time = time;
+}
+
+//寄生式继承父类原型
+inheritPrototpye(SubClass, SuperClass);
+//子类新增原型方法
+SubClass.prototype.getTime = function() {
+  console.log(this.time);
+};
+
+//测试
+let instance1 = new SubClass(&#39;js book&#39;, 2014);
+let instance2 = new SubClass(&#39;css book&#39;, 2013);
+
+instance1.colors.push(&#39;black&#39;);
+console.log(instance1.colors);
+console.log(instance2.colors);
+instance2.getName();
+instance2.getTime();
+</code></pre>
+	</div>
+	<div class="meta split">
+		<time class="post-date" datetime="2017-04-08T14:46:30.000Z" itemprop="datePublished">2017-04-08</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="js设计模式之继承模式" data-title="js设计模式之继承模式" data-url="http://yoursite.com/2017/04/08/js设计模式之继承模式/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"DanielXH"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://p1.bqimg.com/578584/84dfc09208d11ea0.jpg' alt='DanielXH'>
+					<div class="media__body">
+						<h4>DanielXH</h4>
+						<p class='site-description'>等待更新中</p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="javascript:;" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		<span>Xudongh ❤ Personal website. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>
